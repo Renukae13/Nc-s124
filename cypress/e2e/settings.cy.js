@@ -5,6 +5,8 @@ describe('settings',()=>{
         }
       });
       beforeEach(()=>{
+        cy.clearCookies()
+        cy.clearLocalStorage()
         cy.login();
         // Click to open the dropdown menu
         cy.get('button.dropdown-toggle').click();
@@ -59,7 +61,7 @@ describe('settings',()=>{
 
   cy.wait(5000);
   
-  cy.get('.card-footer > .hstack > .ms-auto').click()
+  cy.get('.card-footer > .hstack > .ms-auto').should('be.visible').click()
 })
 
 it('deleteLocarea',()=>{

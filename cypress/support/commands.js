@@ -30,18 +30,32 @@ import 'cypress-file-upload';
 
   // Cypress test
   //for mutiple chart numbers.
-  Cypress.Commands.add('selectMultiple', (options) => {
+ /* Cypress.Commands.add('selectMultiple', (options) => {
     options.forEach(option => {
       cy.get('.rbt-input-main').type(option);
       cy.get('.dropdown-menu').should('be.visible');
       cy.contains('.dropdown-item', option).click();
     }); 
+  });*/
+  Cypress.Commands.add('selectMultiple', (options) => {
+    options.forEach(option => {
+      cy.get('.rbt-input-main').should('be.visible').type(option);       // Ensure input is visible 
+      cy.get('.dropdown-menu').should('be.visible');      // Ensure dropdown is open
+      cy.contains('.dropdown-item', option).should('be.visible')       // Ensure the item is visible
+        .click();
+    }); 
   });
   //For selecting the dropdowns from list
-  Cypress.Commands.add('typeandselector',(selector,text)=>{
-    cy.get(selector).clear().type(text);
-    cy.contains('.dropdown-item', text).click();
-    });
+  Cypress.Commands.add('typeandselector', (selector, text) => {
+    cy.get(selector)
+      .should('be.visible')      // Ensure the input is visible
+      .clear()
+      .type(text);
+  
+    cy.contains('.dropdown-item', text)
+      .should('be.visible')      // Wait for the dropdown option to appear
+      .click();
+  });
 //For login
 Cypress.Commands.add('login',()=>{
   cy.visit('http://172.16.7.223:3042/')
